@@ -6,7 +6,12 @@
     "node": ">=24"
   },
   "scripts": {
-    "build": "./build-extensions.sh",
+    "build": "node scripts/build.mjs",
+    "build:chrome": "node scripts/build.mjs chrome",
+    "build:firefox": "node scripts/build.mjs firefox",
+    "dev:chrome": "node scripts/build.mjs chrome --watch",
+    "dev:firefox": "node scripts/build.mjs firefox --watch",
+    "dev": "node scripts/build.mjs --watch",
     "test": "vitest run",
     "test:unit": "vitest run",
     "test:watch": "vitest",
