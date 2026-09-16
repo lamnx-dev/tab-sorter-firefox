@@ -12,4 +12,5 @@ export const SELECT_DEFAULT_SORT_METHOD =
 export const SELECT_SUSPENDED_TABS_POSITION =
   "ui_change_select_suspended_tabs_position";
 export const SELECT_THEME = "ui_change_select_theme";
+export const SELECT_LANGUAGE = "ui_change_select_language";
 export const OPEN_SETTINGS_PAGE = "ui_open_settings_page";

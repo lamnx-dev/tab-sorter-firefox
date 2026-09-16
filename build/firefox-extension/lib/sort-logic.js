@@ -27,10 +27,64 @@ export function removeParenthesisNotification(stringToModify) {
   return stringToModify.replace(/\(\d*\)/m, "").trim();
 }
 
+export function getBaseDomain(url) {
+  try {
+    const urlObj = new URL(url);
+    let host = urlObj.hostname.toLowerCase().replace(/^www\./, "");
+    if (!host) return { baseDomain: "", subDomain: "" };
+
+    const parts = host.split(".");
+    if (parts.length <= 2) {
+      return { baseDomain: host, subDomain: "" };
+    }
+
+    // Common two-part ccTLD handling (.com.vn, .co.uk, .edu.vn, etc.)
+    const secondLast = parts[parts.length - 2];
+    const last = parts[parts.length - 1];
+    const isTwoPartTld =
+      last.length === 2 &&
+      ["co", "com", "org", "net", "edu", "gov", "ac"].includes(secondLast);
+
+    const rootParts = isTwoPartTld ? parts.slice(-3) : parts.slice(-2);
+    const subParts = isTwoPartTld ? parts.slice(0, -3) : parts.slice(0, -2);
+
+    return {
+      baseDomain: rootParts.join("."),
+      subDomain: subParts.join("."),
+    };
+  } catch {
+    return { baseDomain: "", subDomain: "" };
+  }
+}
+
 export function comparisonByUrl(tabA, tabB) {
-  const domainA = extractDomain(tabA.url);
-  const domainB = extractDomain(tabB.url);
-  return domainA.localeCompare(domainB);
+  const keyA = getUrlMatchKey(tabA?.url || "");
+  const keyB = getUrlMatchKey(tabB?.url || "");
+  const cmp = keyA.localeCompare(keyB);
+  if (cmp !== 0) return cmp;
+  return (tabA?.url || "").localeCompare(tabB?.url || "");
+}
+
+export function comparisonByDomain(tabA, tabB) {
+  const domainA = getBaseDomain(tabA?.url);
+  const domainB = getBaseDomain(tabB?.url);
+
+  if (domainA.baseDomain && !domainB.baseDomain) return -1;
+  if (!domainA.baseDomain && domainB.baseDomain) return 1;
+
+  const baseCompare = domainA.baseDomain.localeCompare(domainB.baseDomain);
+  if (baseCompare !== 0) {
+    return baseCompare;
+  }
+
+  const subCompare = domainA.subDomain.localeCompare(domainB.subDomain);
+  if (subCompare !== 0) {
+    return subCompare;
+  }
+
+  const urlA = tabA?.url || "";
+  const urlB = tabB?.url || "";
+  return urlA.localeCompare(urlB);
 }
 
 export function comparisonByMru(tabA, tabB) {

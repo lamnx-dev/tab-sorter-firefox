@@ -13,6 +13,7 @@ import {
   setSortPinnedTabs,
   setSuspendedTabsPosition,
   setTheme,
+  setLanguage,
 } from "../lib/settings.js";
 import { extractDomainTabs } from "./extract-domain.js";
 import { sortTabs } from "./sort-tabs.js";
@@ -93,7 +94,10 @@ export function addEventListeners() {
 
     const sortMethod = getDefaultSortMethodCached();
 
-    if (changeInfo.url && sortMethod === "sort_tabs_url") {
+    if (
+      changeInfo.url &&
+      (sortMethod === "sort_tabs_url" || sortMethod === "sort_tabs_domain")
+    ) {
       console.debug(
         `URL changed and sort method is ${sortMethod}, sorting as soon as possible. ${changeInfo.url}`,
       );
@@ -129,6 +133,9 @@ function commandEventListener(command) {
   switch (command) {
     case "command_sort_tabs_url":
       sortTabs("sort_tabs_url");
+      break;
+    case "command_sort_tabs_domain":
+      sortTabs("sort_tabs_domain");
       break;
     case "command_sort_tabs_mru":
       sortTabs("sort_tabs_mru");
@@ -168,6 +175,8 @@ function stateUpdateEventListener(command, value) {
     setDefaultSortMethod(value);
   } else if (command === "ui_change_select_theme") {
     setTheme(value);
+  } else if (command === "ui_change_select_language") {
+    setLanguage(value);
   } else if (command === "ui_click_checkbox_sort_tabs_close_duplicates") {
     setCloseDuplicateTabs(value);
   }

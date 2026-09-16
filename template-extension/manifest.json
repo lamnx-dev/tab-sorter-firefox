@@ -33,6 +33,9 @@
     "command_sort_tabs_url": {
       "description": "Command: Sort Tabs by URL"
     },
+    "command_sort_tabs_domain": {
+      "description": "Command: Sort Tabs by Domain"
+    },
     "command_sort_tabs_shuffle": {
       "description": "Command: Shuffle Tabs"
     },

@@ -1,11 +1,8 @@
 import { replaceHtmlContent } from "../lib/replace-html-content.js";
 import { renderPreferencesControls } from "../lib/preferences-render.js";
+import { translate } from "../lib/locale-logic.js";
 import { OPEN_SETTINGS_PAGE } from "./constants.js";
 import { renderHelpSection } from "./help-render.js";
-
-function translate(message) {
-  return chrome.i18n.getMessage(message);
-}
 
 export function logCommands(commands) {
   if (!commands) {

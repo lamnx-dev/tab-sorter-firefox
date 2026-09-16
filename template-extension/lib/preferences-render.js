@@ -1,4 +1,5 @@
 import { AVAILABLE_THEMES } from "./theme-logic.js";
+import { SUPPORTED_LANGUAGES, translate } from "./locale-logic.js";
 import {
   CHECKBOX_ALL_WINDOWS,
   CHECKBOX_AUTO_ON_NEW_TAB,
@@ -7,13 +8,10 @@ import {
   CHECKBOX_REVERSE,
   CHECKBOX_SORT_PINNED,
   SELECT_DEFAULT_SORT_METHOD,
+  SELECT_LANGUAGE,
   SELECT_SUSPENDED_TABS_POSITION,
   SELECT_THEME,
 } from "./ui-constants.js";
-
-function translate(message) {
-  return chrome.i18n.getMessage(message);
-}
 
 function renderCheckbox(id, initialValue) {
   return `
@@ -51,6 +49,18 @@ function renderThemeOption(themeValue, selectedTheme) {
   `;
 }
 
+function renderLanguageOption(langObj, selectedLanguage) {
+  const label =
+    langObj.code === "auto"
+      ? translate("language_auto")
+      : langObj.name;
+  return `
+<option value="${langObj.code}" ${langObj.code === selectedLanguage ? "selected" : ""}>
+    ${label}
+</option>
+  `;
+}
+
 function renderSuspendedTabsPositionOption(positionValue, selectedPosition) {
   return `
 <option value="${positionValue}" ${positionValue === selectedPosition ? "selected" : ""}>
@@ -83,6 +93,7 @@ export function renderPreferencesControls(state) {
     availableSuspendedTabsPositions,
     isSortPinnedTabs,
     theme,
+    language,
     isTabGroupsApiAvailable,
     availableSortMethods,
   } = state;
@@ -120,6 +131,13 @@ export function renderPreferencesControls(state) {
               <label for="${SELECT_THEME}">${translate("theme_label")}</label>
               <select id="${SELECT_THEME}">
                 ${AVAILABLE_THEMES.map((t) => renderThemeOption(t, theme)).join("")}
+              </select>
+            </div>
+            <br>
+            <div class="language-selector">
+              <label for="${SELECT_LANGUAGE}">${translate("language_label")}</label>
+              <select id="${SELECT_LANGUAGE}">
+                ${SUPPORTED_LANGUAGES.map((l) => renderLanguageOption(l, language)).join("")}
               </select>
             </div>
   `;

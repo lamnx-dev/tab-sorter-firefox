@@ -1,41 +1,41 @@
 {
   "actions": {
-    "message": "排序"
+    "message": "Sắp xếp"
   },
   "change_addons_preferences": {
-    "message": "開啟附加元件偏好設定",
+    "message": "Truy cập tùy chọn tiện ích",
     "description": "Link to access the Firefox's about:addons page"
   },
   "command_extract_domain": {
-    "message": "擷取網域",
+    "message": "Tách tên miền",
     "description": "Button for extracting domain tabs to new window"
   },
   "command_sort_tabs_domain": {
-    "message": "依網域",
+    "message": "Theo tên miền",
     "description": "Button for sorting tabs by domain"
   },
   "command_sort_tabs_favicon_and_title": {
-    "message": "依圖示",
-    "description": "Button for sorting tabs by favicon and title"
+    "message": "Theo biểu tượng",
+    "description": "Button for sorting tabs by most recently used"
   },
   "command_sort_tabs_mru": {
-    "message": "依最近使用",
+    "message": "Theo gần đây nhất",
     "description": "Button for sorting tabs by most recently used"
   },
   "command_sort_tabs_shuffle": {
-    "message": "隨機排列分頁",
+    "message": "Xáo trộn tab",
     "description": "Link to reorganize tabs randomly"
   },
   "command_sort_tabs_title": {
-    "message": "依標題",
+    "message": "Theo tiêu đề",
     "description": "Button for sorting tabs by title"
   },
   "command_sort_tabs_url": {
-    "message": "依 URL",
+    "message": "Theo URL",
     "description": "Button for sorting tabs by URL."
   },
   "extensionDescription": {
-    "message": "用於排序分頁的擴充功能。",
+    "message": "Tiện ích mở rộng giúp sắp xếp và quản lý các tab của bạn.",
     "description": "Description of the extension."
   },
   "extensionName": {
@@ -43,143 +43,143 @@
     "description": "Name of the extension."
   },
   "help": {
-    "message": "說明"
+    "message": "Trợ giúp"
   },
   "help_encountered_a_problem_answer": {
-    "message": "<a target=\"_blank\" href=\"https://github.com/etienneschalk/tab-sorter-firefox/issues/new\">請在 GitHub 上建立 issue</a>"
+    "message": "<a target=\"_blank\" href=\"https://github.com/etienneschalk/tab-sorter-firefox/issues/new\">Vui lòng tạo issue trên GitHub</a>"
   },
   "help_encountered_a_problem_question": {
-    "message": "我遇到問題了！"
+    "message": "Tôi gặp sự cố!"
   },
   "help_how_to_update_shortcuts_answer": {
-    "message": "此擴充功能為部分排序方式提供預設快捷鍵。您可以直接在 Firefox 中變更。詳情請參閱：<a target=\"_blank\" href=\"https://support.mozilla.org/zh-TW/kb/manage-extension-shortcuts-firefox\">在 Firefox 中管理擴充功能快捷鍵</a>"
+    "message": "Tiện ích đi kèm các phím tắt định sẵn cho một số cách sắp xếp. Bạn có thể thay đổi chúng trực tiếp trong Firefox. Xem thêm: <a target=\"_blank\" href=\"https://support.mozilla.org/vi/kb/manage-extension-shortcuts-firefox\">Quản lý phím tắt tiện ích trong Firefox</a>"
   },
   "help_how_to_update_shortcuts_answer_chrome": {
-    "message": "此擴充功能為部分排序方式提供預設快捷鍵。在 Chrome 中開啟 <a href=\"chrome://extensions/shortcuts\" class=\"chrome-shortcuts-link\">chrome://extensions/shortcuts</a> 即可查看或變更。"
+    "message": "Tiện ích đi kèm các phím tắt định sẵn. Mở <a href=\"chrome://extensions/shortcuts\" class=\"chrome-shortcuts-link\">chrome://extensions/shortcuts</a> trong Chrome để xem hoặc đổi phím tắt."
   },
   "help_how_to_update_shortcuts_question": {
-    "message": "如何更新不同排序方式的鍵盤快捷鍵？"
+    "message": "Làm thế nào để thay đổi phím tắt cho các kiểu sắp xếp khác nhau?"
   },
   "help_mru_not_working_chrome_answer": {
-    "message": "得益於分頁 API 的 lastAccessed 屬性，此功能現已在 Chrome 121 以上可用。詳情請參閱：<a target=\"_blank\" href=\"https://developer.chrome.com/docs/extensions/reference/api/tabs\">Chrome 分頁 API 文件</a>"
+    "message": "Tính năng này hoạt động từ Chrome 121+ nhờ thuộc tính lastAccessed trong tabs API. Xem thêm: <a target=\"_blank\" href=\"https://developer.chrome.com/docs/extensions/reference/api/tabs\">Tài liệu Chrome Tabs API</a>"
   },
   "help_mru_not_working_chrome_question": {
-    "message": "依最近使用排序在 Chrome 121 以上可用。"
+    "message": "Sắp xếp theo gần đây nhất hoạt động từ Chrome 121+."
   },
   "help_tab_groups_not_supported_chrome": {
-    "message": "Tab Groups are not supported in this Chrome version. Sorting tabs within groups while preserving group layout requires Chrome 89 or later. On older versions, tabs are still sorted across the whole window.",
+    "message": "Nhóm tab (Tab Groups) không được hỗ trợ trong phiên bản Chrome này. Sắp xếp tab trong nhóm yêu cầu Chrome 89 trở lên. Trên các phiên bản cũ hơn, các tab vẫn được sắp xếp trên toàn bộ cửa sổ.",
     "description": "Help text when the Tab Groups API is unavailable in Chrome"
   },
   "help_tab_groups_not_supported_firefox": {
-    "message": "Tab Groups are not supported in this Firefox version. Sorting tabs within groups while preserving group layout requires Firefox 139 or later. On older versions, tabs are still sorted across the whole window.",
+    "message": "Nhóm tab (Tab Groups) không được hỗ trợ trong phiên bản Firefox này. Sắp xếp tab trong nhóm yêu cầu Firefox 139 trở lên. Trên các phiên bản cũ hơn, các tab vẫn được sắp xếp trên toàn bộ cửa sổ.",
     "description": "Help text when the Tab Groups API is unavailable in Firefox"
   },
   "language_auto": {
-    "message": "自動 (依照瀏覽器)",
+    "message": "Tự động (theo trình duyệt)",
     "description": "Auto language option"
   },
   "language_label": {
-    "message": "語言:",
+    "message": "Ngôn ngữ:",
     "description": "Label for language selector"
   },
   "no_shortcut_configured": {
-    "message": "尚未設定快捷鍵"
+    "message": "Chưa thiết lập phím tắt"
   },
   "open_settings_page": {
-    "message": "開啟完整設定頁面",
+    "message": "Mở trang cài đặt đầy đủ",
     "description": "Link in the popup to open the extension settings page"
   },
   "options_page_auto_save": {
-    "message": "變更會自動儲存。",
+    "message": "Các thay đổi được lưu tự động.",
     "description": "Hint shown on the settings page"
   },
   "options_page_intro": {
-    "message": "設定 Tab Sorter 偏好設定。變更會自動儲存，並與擴充功能彈出視窗共用。",
+    "message": "Cấu hình tùy chọn Tab Sorter. Các thay đổi được lưu tự động và đồng bộ với popup tiện ích.",
     "description": "Introduction text on the settings page"
   },
   "preferences": {
-    "message": "偏好設定"
+    "message": "Tùy chọn"
   },
   "preferences_appearance": {
-    "message": "外觀",
+    "message": "Giao diện",
     "description": "Section header for appearance preferences"
   },
   "preferences_auto": {
-    "message": "自動排序"
+    "message": "Sắp xếp tự động"
   },
   "preferences_general": {
-    "message": "一般偏好設定"
+    "message": "Tùy chọn chung"
   },
   "preferences_suspended_tabs": {
-    "message": "已休眠分頁",
+    "message": "Tab tạm dừng (Suspended)",
     "description": "Section header for suspended tabs preferences"
   },
   "preferences_tab_groups": {
-    "message": "分頁群組",
+    "message": "Nhóm tab (Tab Groups)",
     "description": "Section header for tab groups preferences"
   },
   "suspended_tabs_position_beginning": {
-    "message": "群組到開頭",
+    "message": "Gom về đầu danh sách",
     "description": "Move suspended tabs to the beginning when sorting"
   },
   "suspended_tabs_position_end": {
-    "message": "群組到末尾",
+    "message": "Gom về cuối danh sách",
     "description": "Move suspended tabs to the end when sorting"
   },
   "suspended_tabs_position_ignore": {
-    "message": "忽略已捨棄狀態",
+    "message": "Bỏ qua trạng thái tạm dừng",
     "description": "Don't treat suspended tabs specially"
   },
   "suspended_tabs_position_label": {
-    "message": "休眠分頁位置：",
+    "message": "Vị trí tab tạm dừng:",
     "description": "Label for suspended tabs position selector"
   },
   "tab_groups_not_supported": {
-    "message": "此瀏覽器版本不支援分頁群組",
+    "message": "Trình duyệt này chưa hỗ trợ Tab Groups",
     "description": "Message shown when Tab Groups API is not available"
   },
   "theme_auto": {
-    "message": "自動（跟隨系統）",
+    "message": "Tự động (theo hệ thống)",
     "description": "Auto theme option - follows system preference"
   },
   "theme_dark": {
-    "message": "深色",
+    "message": "Tối",
     "description": "Dark theme option"
   },
   "theme_label": {
-    "message": "主題：",
+    "message": "Chủ đề:",
     "description": "Label for theme selector"
   },
   "theme_light": {
-    "message": "淺色",
+    "message": "Sáng",
     "description": "Light theme option"
   },
   "ui_change_select_sort_select_tabs_default_sort_method": {
-    "message": "自動排序的預設排序方式",
+    "message": "Phương thức sắp xếp mặc định khi tự động sắp xếp",
     "description": "Select Default sort method for auto sort on new tab"
   },
   "ui_click_checkbox_sort_tabs_all_windows": {
-    "message": "排序所有視窗中的分頁",
+    "message": "Sắp xếp tab trên tất cả các cửa sổ",
     "description": "Sorting tabs also in other windows"
   },
   "ui_click_checkbox_sort_tabs_auto_best_effort": {
-    "message": "自動排序分頁（盡力而為）。",
+    "message": "Tự động sắp xếp tab khi có thay đổi",
     "description": "Sort tabs automatically (best effort)."
   },
   "ui_click_checkbox_sort_tabs_close_duplicates": {
-    "message": "關閉重複分頁",
+    "message": "Đóng các tab bị trùng lặp",
     "description": "Close tabs with the same URL when using a sort action"
   },
   "ui_click_checkbox_sort_tabs_pinned": {
-    "message": "同時排序已釘選分頁",
+    "message": "Sắp xếp cả các tab đã ghim",
     "description": "Sort pinned tabs independently from non-pinned tabs"
   },
   "ui_click_checkbox_sort_tabs_respect_tab_groups": {
-    "message": "尊重分頁群組（在群組內排序）",
+    "message": "Tôn trọng nhóm tab (chỉ sắp xếp bên trong từng nhóm)",
     "description": "Keep tabs in their groups and sort within each group"
   },
   "ui_click_checkbox_sort_tabs_reverse": {
-    "message": "反向排序",
+    "message": "Đảo ngược thứ tự sắp xếp",
     "description": "Reverse sorting order"
   }
 }

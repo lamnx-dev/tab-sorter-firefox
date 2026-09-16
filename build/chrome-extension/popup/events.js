@@ -1,8 +1,8 @@
 import { registerPreferencesEventListeners } from "../lib/preferences-events.js";
 import { OPEN_SETTINGS_PAGE } from "./constants.js";
 
-export function registerPopupEventListeners(applyTheme) {
-  registerPreferencesEventListeners(document, applyTheme);
+export function registerPopupEventListeners(applyTheme, applyLanguage) {
+  registerPreferencesEventListeners(document, applyTheme, applyLanguage);
 
   document.addEventListener(
     "click",

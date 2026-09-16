@@ -1,9 +1,6 @@
 import { isFirefoxExtension } from "../lib/browser-logic.js";
 import { TAB_GROUPS_API_AVAILABLE } from "../lib/settings.js";
-
-function translate(message) {
-  return chrome.i18n.getMessage(message);
-}
+import { translate } from "../lib/locale-logic.js";
 
 function renderShortcutsHelpAnswer() {
   if (isFirefoxExtension()) {

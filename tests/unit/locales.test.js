@@ -44,6 +44,7 @@ describe("locale messages.json", () => {
         "ru",
         "sv",
         "tr",
+        "vi",
         "zh_CN",
         "zh_TW",
       ].sort(),

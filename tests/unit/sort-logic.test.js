@@ -1,14 +1,119 @@
 import { describe, expect, it } from "vitest";
 import {
+  comparisonByDomain,
   comparisonByUrl,
   computeGroupAwareTabOrder,
   computeLegacyTabOrder,
   computePinnedTabOrder,
+  getBaseDomain,
   groupSuspendedTabs,
   organizeTabsByGroup,
   removeParenthesisNotification,
 } from "../../template-extension/lib/sort-logic.js";
 import { tab, tabsFromUrls } from "../helpers/tab-fixtures.js";
+
+describe("getBaseDomain", () => {
+  it("extracts base domain and subDomain correctly", () => {
+    expect(getBaseDomain("https://mail.google.com/inbox")).toEqual({
+      baseDomain: "google.com",
+      subDomain: "mail",
+    });
+    expect(getBaseDomain("https://www.google.com/search")).toEqual({
+      baseDomain: "google.com",
+      subDomain: "",
+    });
+    expect(getBaseDomain("https://banhang.shopee.vn/portal")).toEqual({
+      baseDomain: "shopee.vn",
+      subDomain: "banhang",
+    });
+    expect(getBaseDomain("https://news.bbc.co.uk/news")).toEqual({
+      baseDomain: "bbc.co.uk",
+      subDomain: "news",
+    });
+    expect(getBaseDomain("about:blank")).toEqual({
+      baseDomain: "",
+      subDomain: "",
+    });
+  });
+});
+
+describe("comparisonByDomain", () => {
+  it("sorts tabs by domain alphabetically ignoring www and case", () => {
+    const tabs = tabsFromUrls([
+      "https://www.youtube.com/watch",
+      "https://Github.com/login",
+      "https://amazon.com/item",
+      "https://google.com/search",
+    ]);
+
+    const order = [...tabs]
+      .sort(comparisonByDomain)
+      .map((t) => extractHostname(t.url));
+
+    expect(order).toEqual(["amazon.com", "github.com", "google.com", "youtube.com"]);
+  });
+
+  it("groups subdomains together under the root domain", () => {
+    const tabs = tabsFromUrls([
+      "https://mail.google.com/inbox",
+      "https://facebook.com/user",
+      "https://docs.google.com/doc",
+      "https://shopee.vn/item",
+      "https://google.com/search",
+      "https://banhang.shopee.vn/portal",
+      "https://m.facebook.com/home",
+    ]);
+
+    const sortedUrls = [...tabs]
+      .sort(comparisonByDomain)
+      .map((t) => t.url);
+
+    expect(sortedUrls).toEqual([
+      "https://facebook.com/user",
+      "https://m.facebook.com/home",
+      "https://google.com/search",
+      "https://docs.google.com/doc",
+      "https://mail.google.com/inbox",
+      "https://shopee.vn/item",
+      "https://banhang.shopee.vn/portal",
+    ]);
+  });
+
+  it("sub-sorts tabs by url when domains are identical", () => {
+    const tabs = tabsFromUrls([
+      "https://github.com/zebra",
+      "https://github.com/apple",
+      "https://github.com/banana",
+    ]);
+
+    const sortedUrls = [...tabs]
+      .sort(comparisonByDomain)
+      .map((t) => t.url);
+
+    expect(sortedUrls).toEqual([
+      "https://github.com/apple",
+      "https://github.com/banana",
+      "https://github.com/zebra",
+    ]);
+  });
+
+  it("handles urls without domain safely without throwing errors", () => {
+    const tabs = [
+      tab(1, "https://google.com"),
+      tab(2, "about:blank"),
+      tab(3, "https://amazon.com"),
+      tab(4, "about:config"),
+    ];
+
+    const sortedIds = [...tabs]
+      .sort(comparisonByDomain)
+      .map((t) => t.id);
+
+    // Domain tabs (amazon=3, google=1) come before non-domain tabs (about:blank=2, about:config=4)
+    expect(sortedIds.slice(0, 2)).toEqual([3, 1]);
+    expect(sortedIds.slice(2)).toEqual([2, 4]);
+  });
+});
 
 describe("comparisonByUrl", () => {
   it("sorts by domain regardless of www prefix (issue #20)", () => {

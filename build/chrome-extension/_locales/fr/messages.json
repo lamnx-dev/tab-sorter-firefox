@@ -10,6 +10,10 @@
     "message": "Extraire le domaine",
     "description": "Button for extracting domain tabs to new window"
   },
+  "command_sort_tabs_domain": {
+    "message": "Par domaine",
+    "description": "Button for sorting tabs by domain"
+  },
   "command_sort_tabs_favicon_and_title": {
     "message": "Par icône",
     "description": "Button for sorting tabs by most recently used"
@@ -69,6 +73,14 @@
   "help_tab_groups_not_supported_firefox": {
     "message": "Les groupes d'onglets ne sont pas pris en charge dans cette version de Firefox. Le tri à l'intérieur des groupes tout en conservant leur disposition nécessite Firefox 139 ou ultérieur. Sur les versions plus anciennes, les onglets sont tout de même triés, mais sur l'ensemble de la fenêtre.",
     "description": "Help text when the Tab Groups API is unavailable in Firefox"
+  },
+  "language_auto": {
+    "message": "Automatique (selon le navigateur)",
+    "description": "Auto language option"
+  },
+  "language_label": {
+    "message": "Langue :",
+    "description": "Label for language selector"
   },
   "no_shortcut_configured": {
     "message": "Pas encore de raccourci configuré"

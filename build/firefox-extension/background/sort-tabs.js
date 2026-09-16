@@ -1,4 +1,5 @@
 import {
+  comparisonByDomain,
   comparisonByMru,
   comparisonByTitle,
   comparisonByUrl,
@@ -224,6 +225,9 @@ function performSort(tabs, sortingType, doShuffle, log_prefix) {
   switch (sortingType) {
     case "sort_tabs_url":
       comparisonFunction = comparisonByUrl;
+      break;
+    case "sort_tabs_domain":
+      comparisonFunction = comparisonByDomain;
       break;
     case "sort_tabs_mru":
       comparisonFunction = comparisonByMru;

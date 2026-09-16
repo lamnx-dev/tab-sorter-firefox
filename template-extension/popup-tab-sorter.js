@@ -1,9 +1,14 @@
 import { loadInitialState } from "./lib/load-initial-state.js";
-import { applyDocumentLocale } from "./lib/locale-logic.js";
+import {
+  applyDocumentLocale,
+  loadLocaleMessages,
+} from "./lib/locale-logic.js";
 import { applyTheme as applyThemeToDocument } from "./lib/theme-logic.js";
 import { COMMAND_DISPLAY_PRIORITY } from "./popup/constants.js";
 import { registerPopupEventListeners } from "./popup/events.js";
 import { logCommands, mountPopup } from "./popup/render.js";
+
+let currentState = null;
 
 function applyTheme(theme) {
   const resolvedTheme = applyThemeToDocument(theme, document);
@@ -12,15 +17,27 @@ function applyTheme(theme) {
   );
 }
 
-registerPopupEventListeners(applyTheme);
+async function applyLanguage(language) {
+  if (currentState) {
+    currentState.language = language;
+  }
+  await loadLocaleMessages(language);
+  applyDocumentLocale(document, language);
+  if (currentState) {
+    initializeUserInterface(currentState);
+  }
+}
 
-applyDocumentLocale(document);
+registerPopupEventListeners(applyTheme, applyLanguage);
 
 (async () => {
   try {
     const initialState = await loadInitialState();
+    currentState = initialState;
     console.debug("== Popup initial state loaded");
 
+    await loadLocaleMessages(initialState.language);
+    applyDocumentLocale(document, initialState.language);
     applyTheme(initialState.theme);
     initializeUserInterface(initialState);
   } catch (error) {

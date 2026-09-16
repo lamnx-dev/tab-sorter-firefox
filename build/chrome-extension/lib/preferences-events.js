@@ -1,4 +1,4 @@
-import { SELECT_THEME } from "./ui-constants.js";
+import { SELECT_LANGUAGE, SELECT_THEME } from "./ui-constants.js";
 
 export function sendPreferenceUpdate(command, value) {
   return chrome.runtime.sendMessage({
@@ -8,7 +8,11 @@ export function sendPreferenceUpdate(command, value) {
   });
 }
 
-export function registerPreferencesEventListeners(root, applyTheme) {
+export function registerPreferencesEventListeners(
+  root,
+  applyTheme,
+  applyLanguage,
+) {
   root.addEventListener("click", (e) => {
     const id = e.target.id;
     if (!id.startsWith("ui_click_checkbox_")) {
@@ -26,6 +30,9 @@ export function registerPreferencesEventListeners(root, applyTheme) {
     const value = e.target.value;
     if (id === SELECT_THEME && applyTheme) {
       applyTheme(value);
+    }
+    if (id === SELECT_LANGUAGE && applyLanguage) {
+      applyLanguage(value);
     }
     sendPreferenceUpdate(id, value);
   });

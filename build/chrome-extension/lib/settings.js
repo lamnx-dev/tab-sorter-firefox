@@ -3,6 +3,7 @@ export const TAB_SORTER_PREFIX = "[Tab Sorter]";
 export const AVAILABLE_SORT_METHODS = [
   "sort_tabs_mru",
   "sort_tabs_url",
+  "sort_tabs_domain",
   "sort_tabs_title",
   "sort_tabs_favicon_and_title",
 ];
@@ -34,6 +35,8 @@ export const STORAGE_KEY_SORT_PINNED_TABS =
 export const STORAGE_DEFAULT_VALUE_SORT_PINNED_TABS = false;
 export const STORAGE_KEY_THEME = "TAB_SORTER_STORAGE_KEY_THEME";
 export const STORAGE_DEFAULT_VALUE_THEME = "auto";
+export const STORAGE_KEY_LANGUAGE = "TAB_SORTER_STORAGE_KEY_LANGUAGE";
+export const STORAGE_DEFAULT_VALUE_LANGUAGE = "auto";
 export const STORAGE_KEY_CLOSE_DUPLICATE_TABS =
   "TAB_SORTER_STORAGE_KEY_CLOSE_DUPLICATE_TABS";
 export const STORAGE_DEFAULT_VALUE_CLOSE_DUPLICATE_TABS = false;
@@ -101,6 +104,13 @@ export async function getThemeAsync() {
   );
 }
 
+export async function getLanguageAsync() {
+  return await retrieveFromStorage(
+    STORAGE_KEY_LANGUAGE,
+    STORAGE_DEFAULT_VALUE_LANGUAGE,
+  );
+}
+
 export async function getCloseDuplicateTabsAsync() {
   return await retrieveFromStorage(
     STORAGE_KEY_CLOSE_DUPLICATE_TABS,
@@ -127,6 +137,7 @@ export async function resetCacheAsync() {
   await getSuspendedTabsPositionAsync();
   await getSortPinnedTabsAsync();
   await getThemeAsync();
+  await getLanguageAsync();
   await getCloseDuplicateTabsAsync();
   await getAllCommandsFromManifest();
 }
@@ -187,6 +198,10 @@ export function getThemeCached() {
   return value;
 }
 
+export function getLanguageCached() {
+  return CACHED_STATE[STORAGE_KEY_LANGUAGE] || STORAGE_DEFAULT_VALUE_LANGUAGE;
+}
+
 export function getCloseDuplicateTabsCached() {
   return CACHED_STATE[STORAGE_KEY_CLOSE_DUPLICATE_TABS];
 }
@@ -223,6 +238,10 @@ export function setTheme(choice) {
   persistInStorage(STORAGE_KEY_THEME, choice);
 }
 
+export function setLanguage(choice) {
+  persistInStorage(STORAGE_KEY_LANGUAGE, choice);
+}
+
 export function setCloseDuplicateTabs(choice) {
   persistInStorage(STORAGE_KEY_CLOSE_DUPLICATE_TABS, choice);
 }
@@ -238,6 +257,8 @@ export function buildInitialState() {
     availableSuspendedTabsPositions: AVAILABLE_SUSPENDED_TABS_POSITIONS,
     isSortPinnedTabs: CACHED_STATE[STORAGE_KEY_SORT_PINNED_TABS],
     theme: CACHED_STATE[STORAGE_KEY_THEME],
+    language:
+      CACHED_STATE[STORAGE_KEY_LANGUAGE] || STORAGE_DEFAULT_VALUE_LANGUAGE,
     isTabGroupsApiAvailable: TAB_GROUPS_API_AVAILABLE,
     isCloseDuplicateTabs: CACHED_STATE[STORAGE_KEY_CLOSE_DUPLICATE_TABS],
     availableSortMethods: AVAILABLE_SORT_METHODS,
