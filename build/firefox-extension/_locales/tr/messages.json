@@ -181,5 +181,9 @@
   "ui_click_checkbox_sort_tabs_reverse": {
     "message": "Sıralamayı tersine çevir",
     "description": "Reverse sorting order"
+  },
+  "ui_click_checkbox_sort_tabs_prioritize_localhost": {
+    "message": "Localhost sekmelerini başta önceliklendir",
+    "description": "Label for the checkbox to prioritize localhost tabs during sorting"
   }
 }

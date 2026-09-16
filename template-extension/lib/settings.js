@@ -40,6 +40,9 @@ export const STORAGE_DEFAULT_VALUE_LANGUAGE = "auto";
 export const STORAGE_KEY_CLOSE_DUPLICATE_TABS =
   "TAB_SORTER_STORAGE_KEY_CLOSE_DUPLICATE_TABS";
 export const STORAGE_DEFAULT_VALUE_CLOSE_DUPLICATE_TABS = false;
+export const STORAGE_KEY_PRIORITIZE_LOCALHOST =
+  "TAB_SORTER_STORAGE_KEY_PRIORITIZE_LOCALHOST";
+export const STORAGE_DEFAULT_VALUE_PRIORITIZE_LOCALHOST = false;
 
 export const CACHE_KEY_ALL_COMMANDS = "CACHE_KEY_ALL_COMMANDS";
 
@@ -118,6 +121,13 @@ export async function getCloseDuplicateTabsAsync() {
   );
 }
 
+export async function getPrioritizeLocalhostAsync() {
+  return await retrieveFromStorage(
+    STORAGE_KEY_PRIORITIZE_LOCALHOST,
+    STORAGE_DEFAULT_VALUE_PRIORITIZE_LOCALHOST,
+  );
+}
+
 export async function getAllCommandsFromManifest() {
   const allCommands = await chrome.commands.getAll();
   CACHED_STATE[CACHE_KEY_ALL_COMMANDS] = allCommands;
@@ -139,6 +149,7 @@ export async function resetCacheAsync() {
   await getThemeAsync();
   await getLanguageAsync();
   await getCloseDuplicateTabsAsync();
+  await getPrioritizeLocalhostAsync();
   await getAllCommandsFromManifest();
 }
 
@@ -206,6 +217,13 @@ export function getCloseDuplicateTabsCached() {
   return CACHED_STATE[STORAGE_KEY_CLOSE_DUPLICATE_TABS];
 }
 
+export function getPrioritizeLocalhostCached() {
+  const value = CACHED_STATE[STORAGE_KEY_PRIORITIZE_LOCALHOST];
+  return value !== undefined
+    ? value
+    : STORAGE_DEFAULT_VALUE_PRIORITIZE_LOCALHOST;
+}
+
 export function setReverse(choice) {
   persistInStorage(STORAGE_KEY_REVERSE, choice);
 }
@@ -246,6 +264,10 @@ export function setCloseDuplicateTabs(choice) {
   persistInStorage(STORAGE_KEY_CLOSE_DUPLICATE_TABS, choice);
 }
 
+export function setPrioritizeLocalhost(choice) {
+  persistInStorage(STORAGE_KEY_PRIORITIZE_LOCALHOST, choice);
+}
+
 export function buildInitialState() {
   return {
     isReverse: CACHED_STATE[STORAGE_KEY_REVERSE],
@@ -261,6 +283,9 @@ export function buildInitialState() {
       CACHED_STATE[STORAGE_KEY_LANGUAGE] || STORAGE_DEFAULT_VALUE_LANGUAGE,
     isTabGroupsApiAvailable: TAB_GROUPS_API_AVAILABLE,
     isCloseDuplicateTabs: CACHED_STATE[STORAGE_KEY_CLOSE_DUPLICATE_TABS],
+    isPrioritizeLocalhost:
+      CACHED_STATE[STORAGE_KEY_PRIORITIZE_LOCALHOST] ??
+      STORAGE_DEFAULT_VALUE_PRIORITIZE_LOCALHOST,
     availableSortMethods: AVAILABLE_SORT_METHODS,
     allCommands: CACHED_STATE[CACHE_KEY_ALL_COMMANDS],
   };

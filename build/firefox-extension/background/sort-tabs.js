@@ -14,6 +14,7 @@ import {
   TAB_GROUPS_API_AVAILABLE,
   getAllWindowsCached,
   getCloseDuplicateTabsCached,
+  getPrioritizeLocalhostCached,
   getRespectTabGroupsCached,
   getReverseCached,
   getSortPinnedTabsCached,
@@ -222,12 +223,16 @@ function performSort(tabs, sortingType, doShuffle, log_prefix) {
     `${log_prefix} Found ${pinnedTabs.length} pinned tabs and ${notPinnedTabs.length} non-pinned tabs`,
   );
 
+  const prioritizeLocalhost = getPrioritizeLocalhostCached();
+
   switch (sortingType) {
     case "sort_tabs_url":
-      comparisonFunction = comparisonByUrl;
+      comparisonFunction = (a, b) =>
+        comparisonByUrl(a, b, { prioritizeLocalhost });
       break;
     case "sort_tabs_domain":
-      comparisonFunction = comparisonByDomain;
+      comparisonFunction = (a, b) =>
+        comparisonByDomain(a, b, { prioritizeLocalhost });
       break;
     case "sort_tabs_mru":
       comparisonFunction = comparisonByMru;
@@ -240,7 +245,8 @@ function performSort(tabs, sortingType, doShuffle, log_prefix) {
       customSort = faviconSort;
       break;
     default:
-      comparisonFunction = comparisonByUrl;
+      comparisonFunction = (a, b) =>
+        comparisonByUrl(a, b, { prioritizeLocalhost });
   }
 
   if (sortPinnedTabs && pinnedTabs.length > 0 && !doShuffle) {

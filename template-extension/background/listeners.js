@@ -14,6 +14,7 @@ import {
   setSuspendedTabsPosition,
   setTheme,
   setLanguage,
+  setPrioritizeLocalhost,
 } from "../lib/settings.js";
 import { extractDomainTabs } from "./extract-domain.js";
 import { sortTabs } from "./sort-tabs.js";
@@ -179,5 +180,9 @@ function stateUpdateEventListener(command, value) {
     setLanguage(value);
   } else if (command === "ui_click_checkbox_sort_tabs_close_duplicates") {
     setCloseDuplicateTabs(value);
+  } else if (
+    command === "ui_click_checkbox_sort_tabs_prioritize_localhost"
+  ) {
+    setPrioritizeLocalhost(value);
   }
 }

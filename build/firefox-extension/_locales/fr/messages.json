@@ -181,5 +181,9 @@
   "ui_click_checkbox_sort_tabs_reverse": {
     "message": "Inverser l'ordre de tri",
     "description": "Reverse sorting order"
+  },
+  "ui_click_checkbox_sort_tabs_prioritize_localhost": {
+    "message": "Prioriser les onglets localhost au début",
+    "description": "Label for the checkbox to prioritize localhost tabs during sorting"
   }
 }

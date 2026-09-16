@@ -181,5 +181,9 @@
   "ui_click_checkbox_sort_tabs_reverse": {
     "message": "反向排序",
     "description": "Reverse sorting order"
+  },
+  "ui_click_checkbox_sort_tabs_prioritize_localhost": {
+    "message": "优先将 localhost 标签页排在最前",
+    "description": "Label for the checkbox to prioritize localhost tabs during sorting"
   }
 }

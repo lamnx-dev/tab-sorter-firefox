@@ -4,6 +4,7 @@ import {
   CHECKBOX_ALL_WINDOWS,
   CHECKBOX_AUTO_ON_NEW_TAB,
   CHECKBOX_CLOSE_DUPLICATES,
+  CHECKBOX_PRIORITIZE_LOCALHOST,
   CHECKBOX_RESPECT_TAB_GROUPS,
   CHECKBOX_REVERSE,
   CHECKBOX_SORT_PINNED,
@@ -87,6 +88,7 @@ export function renderPreferencesControls(state) {
     isAllWindows,
     isAutoOnNewTab,
     isCloseDuplicateTabs,
+    isPrioritizeLocalhost,
     defaultSortMethod,
     isRespectTabGroups,
     suspendedTabsPosition,
@@ -106,6 +108,7 @@ export function renderPreferencesControls(state) {
             ${renderCheckbox(CHECKBOX_ALL_WINDOWS, isAllWindows)}
             ${renderCheckbox(CHECKBOX_SORT_PINNED, isSortPinnedTabs)}
             ${renderCheckbox(CHECKBOX_CLOSE_DUPLICATES, isCloseDuplicateTabs)}
+            ${renderCheckbox(CHECKBOX_PRIORITIZE_LOCALHOST, isPrioritizeLocalhost)}
             <br>
             <h3> 💤 ${translate("preferences_suspended_tabs")}</h3>
             <div class="suspended-tabs-selector">

@@ -61,7 +61,62 @@ export function getBaseDomain(url) {
   }
 }
 
-export function comparisonByUrl(tabA, tabB) {
+export function isLocalhostUrl(url) {
+  if (!url) return false;
+  try {
+    const urlObj = new URL(url);
+    if (urlObj.protocol !== "http:" && urlObj.protocol !== "https:") {
+      return false;
+    }
+    const host = urlObj.hostname.toLowerCase().replace(/^www\./, "");
+    return (
+      host === "localhost" ||
+      host === "127.0.0.1" ||
+      host === "::1" ||
+      host === "[::1]" ||
+      host.endsWith(".local") ||
+      host.endsWith(".test") ||
+      host.endsWith(".localhost")
+    );
+  } catch {
+    return false;
+  }
+}
+
+export function getLocalhostPort(url) {
+  if (!url) return 80;
+  try {
+    const urlObj = new URL(url);
+    return (
+      parseInt(urlObj.port, 10) || (urlObj.protocol === "https:" ? 443 : 80)
+    );
+  } catch {
+    return 80;
+  }
+}
+
+export function compareLocalhost(tabA, tabB) {
+  const isLocalA = isLocalhostUrl(tabA?.url);
+  const isLocalB = isLocalhostUrl(tabB?.url);
+  if (isLocalA && !isLocalB) return -1;
+  if (!isLocalA && isLocalB) return 1;
+  if (isLocalA && isLocalB) {
+    const portA = getLocalhostPort(tabA?.url);
+    const portB = getLocalhostPort(tabB?.url);
+    if (portA !== portB) return portA - portB;
+    const urlA = tabA?.url || "";
+    const urlB = tabB?.url || "";
+    return urlA.localeCompare(urlB);
+  }
+  return 0;
+}
+
+export function comparisonByUrl(tabA, tabB, options = {}) {
+  if (options.prioritizeLocalhost) {
+    const localCompare = compareLocalhost(tabA, tabB);
+    if (localCompare !== 0) return localCompare;
+  }
+
   const keyA = getUrlMatchKey(tabA?.url || "");
   const keyB = getUrlMatchKey(tabB?.url || "");
   const cmp = keyA.localeCompare(keyB);
@@ -69,7 +124,12 @@ export function comparisonByUrl(tabA, tabB) {
   return (tabA?.url || "").localeCompare(tabB?.url || "");
 }
 
-export function comparisonByDomain(tabA, tabB) {
+export function comparisonByDomain(tabA, tabB, options = {}) {
+  if (options.prioritizeLocalhost) {
+    const localCompare = compareLocalhost(tabA, tabB);
+    if (localCompare !== 0) return localCompare;
+  }
+
   const domainA = getBaseDomain(tabA?.url);
   const domainB = getBaseDomain(tabB?.url);
 

@@ -181,5 +181,9 @@
   "ui_click_checkbox_sort_tabs_reverse": {
     "message": "Đảo ngược thứ tự sắp xếp",
     "description": "Reverse sorting order"
+  },
+  "ui_click_checkbox_sort_tabs_prioritize_localhost": {
+    "message": "Ưu tiên đưa các tab localhost lên đầu",
+    "description": "Label for the checkbox to prioritize localhost tabs during sorting"
   }
 }

@@ -6,7 +6,9 @@ import {
   computeLegacyTabOrder,
   computePinnedTabOrder,
   getBaseDomain,
+  getLocalhostPort,
   groupSuspendedTabs,
+  isLocalhostUrl,
   organizeTabsByGroup,
   removeParenthesisNotification,
 } from "../../template-extension/lib/sort-logic.js";
@@ -162,6 +164,92 @@ describe("comparisonByUrl", () => {
       "google.com",
       "youtube.com",
     ]);
+  });
+});
+
+describe("isLocalhostUrl and getLocalhostPort", () => {
+  it("identifies localhost, loopback IP and local development domains", () => {
+    expect(isLocalhostUrl("http://localhost:3000")).toBe(true);
+    expect(isLocalhostUrl("https://localhost:8080/path")).toBe(true);
+    expect(isLocalhostUrl("http://127.0.0.1:5173")).toBe(true);
+    expect(isLocalhostUrl("http://[::1]:3000")).toBe(true);
+    expect(isLocalhostUrl("http://api.app.local:4000")).toBe(true);
+    expect(isLocalhostUrl("http://myproject.test")).toBe(true);
+    expect(isLocalhostUrl("http://sub.localhost")).toBe(true);
+  });
+
+  it("returns false for non-localhost websites and internal pages", () => {
+    expect(isLocalhostUrl("https://google.com")).toBe(false);
+    expect(isLocalhostUrl("https://localhost.fake.com")).toBe(false);
+    expect(isLocalhostUrl("chrome://newtab/")).toBe(false);
+    expect(isLocalhostUrl("about:blank")).toBe(false);
+    expect(isLocalhostUrl("")).toBe(false);
+    expect(isLocalhostUrl(null)).toBe(false);
+  });
+
+  it("extracts port accurately", () => {
+    expect(getLocalhostPort("http://localhost:3000")).toBe(3000);
+    expect(getLocalhostPort("http://127.0.0.1:8080/dashboard")).toBe(8080);
+    expect(getLocalhostPort("http://localhost")).toBe(80);
+    expect(getLocalhostPort("https://localhost")).toBe(443);
+    expect(getLocalhostPort("")).toBe(80);
+  });
+});
+
+describe("prioritizeLocalhost option", () => {
+  it("prioritizes localhost tabs to the beginning sorted by port then url in comparisonByDomain", () => {
+    const tabs = [
+      tab(1, "https://google.com"),
+      tab(2, "http://localhost:8080/admin"),
+      tab(3, "http://localhost:3000/app"),
+      tab(4, "https://facebook.com"),
+      tab(5, "http://localhost:3000/api"),
+      tab(6, "http://127.0.0.1:5173"),
+      tab(7, "chrome://newtab/"),
+    ];
+
+    const sortedWithPriority = [...tabs]
+      .sort((a, b) => comparisonByDomain(a, b, { prioritizeLocalhost: true }))
+      .map((t) => t.id);
+
+    // Localhost tabs:
+    // 3000: tab 5 (/api) < tab 3 (/app)
+    // 5173: tab 6
+    // 8080: tab 2
+    // External tabs:
+    // facebook (4) < google (1)
+    // Internal tabs:
+    // chrome://newtab/ (7)
+    expect(sortedWithPriority).toEqual([5, 3, 6, 2, 4, 1, 7]);
+  });
+
+  it("preserves standard domain sorting when prioritizeLocalhost is false", () => {
+    const tabs = [
+      tab(1, "https://google.com"),
+      tab(2, "http://localhost:8080/admin"),
+      tab(3, "https://facebook.com"),
+    ];
+
+    const sortedWithoutPriority = [...tabs]
+      .sort((a, b) => comparisonByDomain(a, b, { prioritizeLocalhost: false }))
+      .map((t) => t.id);
+
+    // facebook.com (3) < google.com (1) < localhost (2)
+    expect(sortedWithoutPriority).toEqual([3, 1, 2]);
+  });
+
+  it("prioritizes localhost tabs to the beginning in comparisonByUrl", () => {
+    const tabs = [
+      tab(1, "https://zebra.com"),
+      tab(2, "http://localhost:3000"),
+      tab(3, "https://apple.com"),
+    ];
+
+    const sorted = [...tabs]
+      .sort((a, b) => comparisonByUrl(a, b, { prioritizeLocalhost: true }))
+      .map((t) => t.id);
+
+    expect(sorted).toEqual([2, 3, 1]);
   });
 });
 

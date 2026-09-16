@@ -181,5 +181,9 @@
   "ui_click_checkbox_sort_tabs_reverse": {
     "message": "Inversează sortarea",
     "description": "Reverse sorting order"
+  },
+  "ui_click_checkbox_sort_tabs_prioritize_localhost": {
+    "message": "Prioritizează filele localhost la început",
+    "description": "Label for the checkbox to prioritize localhost tabs during sorting"
   }
 }
