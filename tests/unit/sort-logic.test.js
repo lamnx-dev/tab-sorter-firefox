@@ -34,6 +34,18 @@ describe("getBaseDomain", () => {
       baseDomain: "",
       subDomain: "",
     });
+    expect(getBaseDomain("chrome://newtab/")).toEqual({
+      baseDomain: "",
+      subDomain: "",
+    });
+    expect(getBaseDomain("chrome://extensions")).toEqual({
+      baseDomain: "",
+      subDomain: "",
+    });
+    expect(getBaseDomain("about:newtab")).toEqual({
+      baseDomain: "",
+      subDomain: "",
+    });
   });
 });
 
@@ -50,7 +62,12 @@ describe("comparisonByDomain", () => {
       .sort(comparisonByDomain)
       .map((t) => extractHostname(t.url));
 
-    expect(order).toEqual(["amazon.com", "github.com", "google.com", "youtube.com"]);
+    expect(order).toEqual([
+      "amazon.com",
+      "github.com",
+      "google.com",
+      "youtube.com",
+    ]);
   });
 
   it("groups subdomains together under the root domain", () => {
@@ -64,9 +81,7 @@ describe("comparisonByDomain", () => {
       "https://m.facebook.com/home",
     ]);
 
-    const sortedUrls = [...tabs]
-      .sort(comparisonByDomain)
-      .map((t) => t.url);
+    const sortedUrls = [...tabs].sort(comparisonByDomain).map((t) => t.url);
 
     expect(sortedUrls).toEqual([
       "https://facebook.com/user",
@@ -86,9 +101,7 @@ describe("comparisonByDomain", () => {
       "https://github.com/banana",
     ]);
 
-    const sortedUrls = [...tabs]
-      .sort(comparisonByDomain)
-      .map((t) => t.url);
+    const sortedUrls = [...tabs].sort(comparisonByDomain).map((t) => t.url);
 
     expect(sortedUrls).toEqual([
       "https://github.com/apple",
@@ -105,13 +118,28 @@ describe("comparisonByDomain", () => {
       tab(4, "about:config"),
     ];
 
-    const sortedIds = [...tabs]
-      .sort(comparisonByDomain)
-      .map((t) => t.id);
+    const sortedIds = [...tabs].sort(comparisonByDomain).map((t) => t.id);
 
     // Domain tabs (amazon=3, google=1) come before non-domain tabs (about:blank=2, about:config=4)
     expect(sortedIds.slice(0, 2)).toEqual([3, 1]);
     expect(sortedIds.slice(2)).toEqual([2, 4]);
+  });
+
+  it("places browser internal tabs (chrome://newtab, about:blank) after all web domains", () => {
+    const tabs = [
+      tab(1, "chrome://newtab/"),
+      tab(2, "https://git.teca.vn/users/sign_in"),
+      tab(3, "about:newtab"),
+      tab(4, "https://facebook.com"),
+    ];
+
+    const sortedIds = [...tabs]
+      .sort(comparisonByDomain)
+      .map((t) => t.id);
+
+    // Web tabs (facebook=4, git.teca.vn=2) come before internal tabs (about:newtab=3, chrome://newtab=1)
+    expect(sortedIds.slice(0, 2)).toEqual([4, 2]);
+    expect(sortedIds.slice(2)).toEqual([3, 1]);
   });
 });
 
@@ -128,7 +156,12 @@ describe("comparisonByUrl", () => {
       .sort(comparisonByUrl)
       .map((t) => extractHostname(t.url));
 
-    expect(order).toEqual(["amazon.com", "github.com", "google.com", "youtube.com"]);
+    expect(order).toEqual([
+      "amazon.com",
+      "github.com",
+      "google.com",
+      "youtube.com",
+    ]);
   });
 });
 

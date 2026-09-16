@@ -30,6 +30,10 @@ export function removeParenthesisNotification(stringToModify) {
 export function getBaseDomain(url) {
   try {
     const urlObj = new URL(url);
+    if (urlObj.protocol !== "http:" && urlObj.protocol !== "https:") {
+      return { baseDomain: "", subDomain: "" };
+    }
+
     let host = urlObj.hostname.toLowerCase().replace(/^www\./, "");
     if (!host) return { baseDomain: "", subDomain: "" };
 
