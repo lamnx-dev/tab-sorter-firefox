@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2026-09-17
+
+### Changed
+- **Default auto-sort enabled**: Auto-sort is now enabled by default for fresh installations (`STORAGE_DEFAULT_VALUE_AUTO_SORT_ON_NEW_TAB = true`).
+- **Default sort method**: Set default sort method to Domain (`sort_tabs_domain`).
+- **Removed default shortcut**: Removed default `Ctrl+Shift+Space` shortcut from `command_sort_tabs_mru` to avoid conflicts with system/browser shortcuts; shortcut can still be customized by users.
+- **Auto-sort enhancements**: Improved `chrome.tabs.onCreated` to immediately sort tabs created with valid URLs.
+
+### Added
+- Unit tests for settings defaults and manifest commands (`tests/unit/settings.test.js`).
+
+---
+
+## [1.0.0] - 2026-09-16
+
+### Added
+- **Sort Tabs by Domain**: New sort method (`command_sort_tabs_domain`) that groups tabs sharing the same base domain and subdomains together.
+- **Localhost prioritization**: Option to sort `localhost` and local dev addresses to the beginning, ordered by port number then URL.
+- **Language selector & Vietnamese support**:
+  - In-app language dropdown menu in preferences and options page.
+  - Complete Vietnamese (`vi`) localization.
+- **Cross-platform build system**:
+  - Replaced `bash`/`jq` dependency with Node.js build and watch script (`scripts/build.mjs`).
+  - Added npm scripts: `build:chrome`, `build:firefox`, `dev:chrome`, and `dev:firefox`.
+
+### Fixed
+- **Domain sort for non-HTTP URLs**: Handled internal URLs (e.g., `chrome://`, `about:`) properly so they do not incorrectly sort ahead of real domains.
+
+---
+
 ## [0.9] - 2026-06-23
 
 ### Internationalization ([#6](https://github.com/etienneschalk/tab-sorter-firefox/issues/6))

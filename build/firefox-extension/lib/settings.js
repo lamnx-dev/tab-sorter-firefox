@@ -15,10 +15,10 @@ export const STORAGE_KEY_SORT_ALL_WINDOWS =
 export const STORAGE_DEFAULT_VALUE_SORT_ALL_WINDOWS = false;
 export const STORAGE_KEY_AUTO_SORT_BEST_EFFORT =
   "TAB_SORTER_STORAGE_KEY_AUTO_SORT_BEST_EFFORT";
-export const STORAGE_DEFAULT_VALUE_AUTO_SORT_ON_NEW_TAB = false;
+export const STORAGE_DEFAULT_VALUE_AUTO_SORT_ON_NEW_TAB = true;
 export const STORAGE_KEY_DEFAULT_SORT_METHOD =
   "TAB_SORTER_STORAGE_KEY_DEFAULT_SORT_METHOD";
-export const STORAGE_DEFAULT_VALUE_DEFAULT_SORT_METHOD = "sort_tabs_mru";
+export const STORAGE_DEFAULT_VALUE_DEFAULT_SORT_METHOD = "sort_tabs_domain";
 export const STORAGE_KEY_RESPECT_TAB_GROUPS =
   "TAB_SORTER_STORAGE_KEY_RESPECT_TAB_GROUPS";
 export const STORAGE_DEFAULT_VALUE_RESPECT_TAB_GROUPS = true;
@@ -47,7 +47,7 @@ export const STORAGE_DEFAULT_VALUE_PRIORITIZE_LOCALHOST = false;
 export const CACHE_KEY_ALL_COMMANDS = "CACHE_KEY_ALL_COMMANDS";
 
 export const TAB_GROUPS_API_AVAILABLE =
-  typeof chrome.tabGroups !== "undefined";
+  typeof chrome !== "undefined" && typeof chrome.tabGroups !== "undefined";
 
 const CACHED_STATE = {};
 

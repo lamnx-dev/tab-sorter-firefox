@@ -57,13 +57,22 @@ export function addEventListeners() {
       return;
     }
     const sortMethod = getDefaultSortMethodCached();
-    if (sortMethod != "sort_tabs_mru") {
-      return;
+    if (sortMethod === "sort_tabs_mru") {
+      console.debug(
+        `New tab created, sorting as soon as possible. ${tab.lastAccessed}`,
+      );
+      sortTabs(sortMethod);
+    } else if (
+      (sortMethod === "sort_tabs_url" || sortMethod === "sort_tabs_domain") &&
+      tab.url &&
+      !tab.url.startsWith("about:") &&
+      !tab.url.startsWith("chrome:")
+    ) {
+      console.debug(
+        `New tab created with URL and sort method is ${sortMethod}, sorting as soon as possible. ${tab.url}`,
+      );
+      sortTabs(sortMethod);
     }
-    console.debug(
-      `New tab created, sorting as soon as possible. ${tab.lastAccessed}`,
-    );
-    sortTabs(sortMethod);
   });
 
   chrome.tabs.onActivated.addListener((tab) => {

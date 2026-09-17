@@ -4,7 +4,7 @@
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "author": "Etienne Schalk",
-  "version": "0.9",
+  "version": "1.1.0",
   "action": {
     "default_title": "Tab Sorter",
     "default_popup": "tab-sorter.html"
@@ -18,10 +18,7 @@
   },
   "commands": {
     "command_sort_tabs_mru": {
-      "description": "Command: Sort Tabs by MRU (Most Recently Used)",
-      "suggested_key": {
-        "default": "Ctrl+Shift+Space"
-      }
+      "description": "Command: Sort Tabs by MRU (Most Recently Used)"
     },
     "command_sort_tabs_favicon_and_title": {
       "description": "Command: Sort Tabs by Favicon then Title"
